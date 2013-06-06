@@ -36,13 +36,13 @@
 		    <div class="bookStyle">
 			<table>
 				<tr>
-					<td>Book Name : </td><td><input type="text" name="bookname" value=<%= bookname %>></input></td>
+					<td>Book Name : </td><td><input type="text" name="bookname" value="<%= bookname %>"></input></td>
 				</tr>
 				<tr>
-					<td>Author Name : </td><td><input type="text" name="authorname" value=<%= authorname %>></input></td>
+					<td>Author Name : </td><td><input type="text" name="authorname" value="<%= authorname %>"></input></td>
 				</tr>
 				<tr>
-					<td>Status : </td><td><input type="text" name="status" value=<%= status %>></input></td>
+					<td>Status : </td><td><input type="text" name="status" value="<%= status %>"></input></td>
 				</tr>
 			</table>
 			<div align="center">
@@ -112,7 +112,6 @@
 					// Fire Update
 					var postData = this.model.attributes;
 					postData.oldBookName = oldBookName;
-					console.log(postData);
 					$.ajax({
 						type: 'POST',
 						url: 'php/updateBook.php',
@@ -125,6 +124,7 @@
 				    
 				    
 				    render: function() {
+				    	console.log("model",this.model);
 					this.$el.html( this.template( this.model.toJSON() ) );
 					return this;
 				    }
@@ -148,7 +148,6 @@
 				
 				    // Handling render on each book on its book view , and append the ref to list view
 				    renderBook: function( item ) {
-				    	   console.log("book",item);
 					var bookView = new BookView({
 					    model: item
 					});
