@@ -1,0 +1,125 @@
+﻿<html>
+	<head>
+	<title>Add Book</title>
+	<style> 
+		.bookStyle
+		{
+		 width:250px;
+		 font-weight:bold;
+		 background-color:white;
+		 box-shadow: 10px 10px 5px #888888;
+		}
+		#loadingDiv{
+			position:absolute;
+			width:150px;
+			height:150px;
+			z-index:15;
+			top:50%;
+			left:50%;
+		}
+	</style>
+	  <link rel="stylesheet" href="js/jquery-ui.css" />
+	  <script src="js/jquery-1.9.1.js"></script>
+	  <script src="js/jquery-ui.js"></script>
+	  <script src="js/underscore.js"></script>
+	  <script src="js/backbone.js"></script>
+	  <script>
+	  $(function() {
+	    $( "input[type=submit],button" )
+	      .button()
+	       });
+	  </script>
+	</head>
+	<body>
+	<h1>Add Book</h1> 
+		
+		<script id="addBookTemplate" type="text/template">
+		    <div class="bookStyle">
+		    <table>
+			<tr>
+				<td>Book Name : </td><td><input type="text" name="bookname" value=<%= bookname %>></input></td>
+			</tr>
+			<tr>
+				<td>Author Name : </td><td><input type="text" name="authorname" value=<%= authorname %>></input></td>
+			</tr>
+			<tr>
+				<td>Status : </td><td><input type="text" name="status" value=<%= status %>></input></td>
+			</tr>
+		    </table>
+		    <div align="center">
+		    <button class="add">Add Book</button>
+		    </div>
+		    <br/>
+		    </div>
+		</script>
+		
+		<div id="booksDiv"></div>
+		<div id="loadingDiv" style="display:none">
+			<p><img src="resources/images/loading.gif" /> Loading</p>
+  		</div>
+		
+		<script>
+			(function($) {
+				$(document).ajaxStart(function(){
+				   $("#loadingDiv").show();
+				   }).ajaxStop(function(){
+				   $("#loadingDiv").hide();
+				});
+				var Book = Backbone.Model.extend({
+					defaults: {
+							bookname: '',
+							authorname: '',
+							status: ''
+					}
+				});
+				
+				var BookView = Backbone.View.extend({
+				    el: '#booksDiv',
+				    tagName: 'div',
+				    className: 'bookContainer',
+				    template: _.template( $('#addBookTemplate').html() ),
+				    events: {
+					'click .add': 'addBook'
+				    },
+				    initialize : function(){
+				    	    this.model = new Book();
+				    	    this.render();
+				    },
+				    render : function(){
+				    	this.$el.html( this.template( this.model.toJSON() ) );
+					return this;
+				    },
+				    addBook: function() {
+					// Obtain old book name
+					var self = this;
+					this.$(":input").each(function(i,el){
+						self.model.set(el.name,el.value);
+					}
+					);
+					// Fire Update
+					var postData = this.model.attributes;
+					var bookName = this.model.get("bookname");
+					console.log(postData);
+					$.ajax({
+						type: 'POST',
+						url: 'php/addBook.php',
+						data:postData,
+						success: function(data){
+							if(data == "false"){
+								alert("Could not add Book : " + bookName);
+							}else{
+								alert("Added Book : " + bookName);
+							}
+						},
+						error: function(data){
+							alert("Error occored while adding book, Error : " + data);
+						}
+					});
+				    },
+				});
+				var bookInstance = new BookView();
+			})(jQuery);
+		</script>
+		
+	</body>
+</html>
