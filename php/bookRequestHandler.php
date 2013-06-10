@@ -47,7 +47,8 @@ case "POST" :
 	$bookname = $json["bookname"]; 
 	$authorname = $json["authorname"];
 	$status = $json["status"];
-	if(isset($json["remove"])){
+	if(isset($_POST["remove"])){
+		$bookname = $_POST["bookname"];
 		$query = "DELETE from book_entity where bookname LIKE '$bookname';";  
 		$result = $db->query($query);
 		echo json_encode($result);	
