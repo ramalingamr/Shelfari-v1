@@ -1,0 +1,43 @@
+.bookStyle{
+	width:250px;
+	background-color:lightgrey;
+	float:left;
+	border-style:solid;
+	border-width:2px;
+}
+
+.addBookStyle{
+	width:250px;
+	background-color:white;
+	float:left;
+	border-style:solid;
+	border-width:2px;
+}
+
+#overlay {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: 1000000;
+  background-color:rgba(0,0,0,.3);
+}
+
+#loadingDiv{
+	position:absolute;
+	width:150px;
+	height:150px;
+	z-index:15;
+	top:50%;
+	left:50%;
+}
+.leftContainer{
+	float:left; 
+	width: 70%;
+}
+.rightContainer{
+	float:right;
+	font-weight:bold;
+	background-color:lightgrey;
+	background-repeat: no-repeat;
+	height:100%;
+}
