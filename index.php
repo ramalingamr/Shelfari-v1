@@ -3,7 +3,6 @@
 	<title>Shelfari</title>
 	  <link rel="stylesheet" href="styles/bookStyles.css" />  
 	  <script src="js/jquery-1.9.1.js"></script>
-	  <script src="js/jquery-ui.js"></script>
 	  <script src="js/underscore.js"></script>
 	  <script src="js/backbone.js"></script>
 	  <script>
